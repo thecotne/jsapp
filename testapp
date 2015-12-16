@@ -1,0 +1,53 @@
+#!/usr/bin/seed
+
+/*
+ZetCode JavaScript GTK tutorial
+
+This example demonstrates the Entry widget.
+
+author: Jan Bodnar
+website: www.zetcode.com
+last modified: January 2014
+*/
+
+
+Gtk = imports.gi.Gtk;
+
+Gtk.init(null, null);
+
+Example = new GType({
+    parent: Gtk.Window.type,
+    name: "Example",
+    init: function()
+    {
+        init_ui(this);
+
+        function init_ui(w) {
+
+            w.signal.hide.connect(Gtk.main_quit);
+            w.set_default_size(250, 200);
+            w.set_title("Entry");
+            w.set_position(Gtk.WindowPosition.CENTER);
+
+            var fixed = new Gtk.Fixed();
+
+            var label = new Gtk.Label.c_new("...");
+            fixed.put(label, 60, 40);
+
+            var entry = new Gtk.Entry();
+            fixed.put(entry, 60, 100);
+
+            entry.signal.key_release_event.connect(function(sender) {
+                label.set_text(sender.text);
+                return false;
+            });
+
+            w.add(fixed);
+            w.show_all();
+        }
+    }
+});
+
+
+var window = new Example();
+Gtk.main();
